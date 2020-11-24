@@ -1,4 +1,4 @@
-const sliderContainer = document.querySelector('.slider-container');
+const sliderContainer = document.querySelector('.slider-container'); 
 const slider_img = document.querySelector('.slider-img');
 const images = [
     'https://images.unsplash.com/photo-1466921583968-f07aa80c526e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
