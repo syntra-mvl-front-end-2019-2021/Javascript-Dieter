@@ -9,13 +9,12 @@ const images = [
     'https://images.unsplash.com/photo-1581362662614-dd27d9eb9291?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1353&q=80'
 ];
 let windowInfo = {
-    windowWidth: window.innerWidth
-};
+    windowWidth: window.innerWidth};
 
 // random image from array to start
 let i = Math.floor(Math.random() * images.length);
 
-// add div , class image-slider
+// add div, class image-slider
 let imageSlider = document.createElement('div');
 sliderContainer.appendChild(imageSlider);
 imageSlider.classList.add('image-slider');
@@ -44,9 +43,38 @@ nextbtn.classList.add('image-slider__nav-btn', 'image-slider__next');
 let nextBtn = document.querySelector('.image-slider__next');
 
 // when images loaded, remove class hide on container
+
+/*
 Promise.all(Array.from(document.images).filter(img => !img.complete).map(img => new Promise(resolve => { img.onload = resolve; }))).then(() => {
     sliderContainer.classList.remove('hide');
 });
+*/
+
+function checkImgUrl(url) {
+    return new Promise(function(resolve, reject){
+        let imgUrl = new Image();
+        imgUrl.onload = function() {
+            resolve(url);
+        }
+        imgUrl.onerror = function() {
+            reject(url);
+        }
+        imgUrl.src = url;
+    })
+}
+
+let promises = images.map(checkImgUrl);
+
+Promise.all(promises)
+    .then(imgUrls =>
+        { for (let i = 0; i < imgUrls.length; i++) {
+            sliderContainer.classList.remove('hide');
+            }
+        })
+    .catch(imgUrls =>
+        {
+        alert("Error");
+        });
 
 // change img src
 function setImg(){
